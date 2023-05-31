@@ -3,6 +3,8 @@
 
 #include "../../utilities/std_types.h"
 
+#define NUM_OF_TASKS 5
+
 /**
  * @brief Describes the system status of the OS.
  * 
@@ -20,12 +22,12 @@ typedef enum {
  * This is a value staring from 1, where 1 is the highest priority task.
  */
 typedef struct {
-    uint8 pid; uint8 process_priority_level;
-}st_SOS_TASK_t;
+    uint8 process_id; uint8 process_priority_level;
+}st_SOS_task_property_t;
 
 
-/*Global pointer to the address of the data base.*/
-static st_SOS_TASK_t *g_ptr_sos_db[10];
+/*Global pointer to the address of the database.*/
+extern st_SOS_task_property_t* (*g_ptr_SOS_db)[5];
 
 /**
  * @brief Creates the DB instance and assigns the address of this DB to the global pointer.
@@ -48,7 +50,7 @@ en_SOS_SYSTEM_STATUS_t SOS_deinit(void);
  * @param pid Task's uniqie ID.
  * @param priority_level Task's priority level.
  */
-void SOS_crateTask(st_SOS_TASK_t *ptr_st_SOS_DB, uint8 pid, uint8 priority_level);
+void SOS_crateTask(st_SOS_task_property_t *ptr_st_SOS_DB, uint8 pid, uint8 priority_level);
 
 /**
  * @brief Removes a task from the database.
@@ -56,7 +58,7 @@ void SOS_crateTask(st_SOS_TASK_t *ptr_st_SOS_DB, uint8 pid, uint8 priority_level
  * @param ptr_st_SOS_DB Address of the tasks database.
  * @param pid Task's uniqie ID.
  */
-void SOS_deleteTask(st_SOS_TASK_t *ptr_st_SOS_DB, uint8 pid);
+void SOS_deleteTask(st_SOS_task_property_t *ptr_st_SOS_DB, uint8 pid);
 
 /**
  * @brief Modifies the priority level of a task.
@@ -65,20 +67,20 @@ void SOS_deleteTask(st_SOS_TASK_t *ptr_st_SOS_DB, uint8 pid);
  * @param pid Task's uniqie ID.
  * @param priority_level Task's priority level.
  */
-void SOS_modifyTask(st_SOS_TASK_t *ptr_st_SOS_DB, uint8 pid, uint8 priority_level);
+void SOS_modifyTask(st_SOS_task_property_t *ptr_st_SOS_DB, uint8 pid, uint8 priority_level);
 
 /**
  * @brief Runs the small OS.
  * This is done by loading the timer with a preloaded value which will be the period of every task.
  * @param ptr_st_SOS_DB Address of the tasks database.
  */
-void SOS_run(st_SOS_TASK_t *ptr_st_SOS_DB);
+void SOS_run(st_SOS_task_property_t *ptr_st_SOS_DB);
 
 /**
  * @brief Halts the operation of the small OS.
  * This is done by disengaging the timer.
  * @param ptr_st_SOS_DB Address of the tasks database.
  */
-void SOS_disable(st_SOS_TASK_t *ptr_st_SOS_DB);
+void SOS_disable(st_SOS_task_property_t *ptr_st_SOS_DB);
 
 #endif /* SOS_H_ */
