@@ -1,9 +1,3 @@
-/*
- * timers.h
- *
- * Created: 4/8/2023 4:39:45 PM
- *  Author: Omar Taha
- */ 
 
 
 #ifndef TIMERS_H
