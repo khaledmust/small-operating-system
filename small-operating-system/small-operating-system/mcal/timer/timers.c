@@ -1,9 +1,4 @@
-/*
- * timers.c
- *
- * Created: 4/8/2023 5:02:04 PM
- *  Author: Omar Taha
- */ 
+
 #include "timers.h"
 static unsigned int u16_gs_t2_initial_value= 0;
 
