@@ -22,7 +22,9 @@ typedef enum {
  * This is a value staring from 1, where 1 is the highest priority task.
  */
 typedef struct {
-    uint8 process_id; uint8 process_priority_level;
+    uint8 process_id;
+    uint8 process_priority_level;
+    void (*fptr_task) (void);
 }st_SOS_task_property_t;
 
 
@@ -50,7 +52,7 @@ en_SOS_SYSTEM_STATUS_t SOS_deinit(void);
  * @param pid Task's uniqie ID.
  * @param priority_level Task's priority level.
  */
-void SOS_crateTask(st_SOS_task_property_t *ptr_st_SOS_DB, uint8 pid, uint8 priority_level);
+void SOS_crateTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level, void (*fptr_task) (void));
 
 /**
  * @brief Removes a task from the database.
@@ -58,7 +60,7 @@ void SOS_crateTask(st_SOS_task_property_t *ptr_st_SOS_DB, uint8 pid, uint8 prior
  * @param ptr_st_SOS_DB Address of the tasks database.
  * @param pid Task's uniqie ID.
  */
-void SOS_deleteTask(st_SOS_task_property_t *ptr_st_SOS_DB, uint8 pid);
+void SOS_deleteTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid);
 
 /**
  * @brief Modifies the priority level of a task.
@@ -67,7 +69,7 @@ void SOS_deleteTask(st_SOS_task_property_t *ptr_st_SOS_DB, uint8 pid);
  * @param pid Task's uniqie ID.
  * @param priority_level Task's priority level.
  */
-void SOS_modifyTask(st_SOS_task_property_t *ptr_st_SOS_DB, uint8 pid, uint8 priority_level);
+void SOS_modifyTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level);
 
 /**
  * @brief Runs the small OS.

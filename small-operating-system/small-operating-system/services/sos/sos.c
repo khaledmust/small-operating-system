@@ -2,7 +2,9 @@
 #include <stdlib.h>
 
 /* Initialize the DB global pointer to NULL. */
-st_SOS_task_property_t* (*g_ptr_SOS_db)[5] = NULL;
+st_SOS_task_property_t* (*g_ptr_SOS_db)[NUM_OF_TASKS] = NULL;
+
+uint8 g_current_tasks_in_queue = 0;
 
 /**
  * @brief Creates the DB instance and assigns the address of this DB to the global DB pointer.
@@ -49,3 +51,45 @@ en_SOS_SYSTEM_STATUS_t SOS_deinit(void) {
     return SOS_STATUS_SUCCESS;
 }
 
+/**
+ * @brief Adds a new task to the database.
+ *
+ * @param ptr_st_SOS_DB Address of the tasks database.
+ * @param pid Task's uniqie ID.
+ * @param priority_level Task's priority level.
+ */
+void SOS_crateTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level, void (*fptr_task) (void)) {
+    if (ptr_st_SOS_DB != NULL && (*ptr_st_SOS_DB)[NUM_OF_TASKS - 1] == NULL) {
+        (*ptr_st_SOS_DB)[g_current_tasks_in_queue]->process_id = pid;
+        (*ptr_st_SOS_DB)[g_current_tasks_in_queue]->process_priority_level = priority_level;
+        (*ptr_st_SOS_DB)[g_current_tasks_in_queue]->fptr_task = fptr_task;
+
+        g_current_tasks_in_queue++;
+    }
+}
+
+/**
+ * @brief Removes a task from the database.
+ *
+ * @param ptr_st_SOS_DB Address of the tasks database.
+ * @param pid Task's uniqie ID.
+ */
+void SOS_deleteTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid) {
+    if (*ptr_st_SOS_DB != NULL) {
+        (*ptr_st_SOS_DB)[pid] = NULL;
+    }
+}
+
+/**
+ * @brief Modifies the priority level of a task.
+ *
+ * @param ptr_st_SOS_DB Address of the tasks database.
+ * @param pid Task's unique ID.
+ * @param priority_level Task's priority level.
+ */
+void SOS_modifyTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level) {
+    // TODO Disable global interrupt.
+    if (*ptr_st_SOS_DB != NULL) {
+        (*ptr_st_SOS_DB)[pid]->process_priority_level = priority_level;
+    }
+}
