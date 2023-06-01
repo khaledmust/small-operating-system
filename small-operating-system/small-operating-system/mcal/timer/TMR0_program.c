@@ -1,9 +1,4 @@
-/******************************************************************/
-/* Author  : Mustafa Mohammed Abdou                               */
-/* Date    : 16 , April 2023                                      */
-/* Version : V01                                                  */
-/* Hint    : Implementation of Timer 0 APIs                       */
-/******************************************************************/ 
+
 
 /** INCLUDE LIBRARIES **/
 #include "../../SERVICE/common_macros.h"
