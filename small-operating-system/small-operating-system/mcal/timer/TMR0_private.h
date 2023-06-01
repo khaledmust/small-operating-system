@@ -1,9 +1,4 @@
-/******************************************************************/
-/* Author  : Mustafa Mohammed Abdou                               */
-/* Date    : 16 , April 2023                                      */
-/* Version : V01                                                  */
-/* Hint    : Private file of Timer 0                              */
-/******************************************************************/ 
+
 
 #ifndef TMR0_PRIVATE_H
 #define TMR0_PRIVATE_H
