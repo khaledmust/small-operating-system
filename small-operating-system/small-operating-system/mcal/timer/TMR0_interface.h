@@ -1,9 +1,4 @@
-/******************************************************************/
-/* Author  : Mustafa Mohammed Abdou                               */
-/* Date    : 16 , April 2023                                      */
-/* Version : V01                                                  */
-/* Hint    : Interface file of Timer 0                            */
-/******************************************************************/
+
 
 #ifndef TMR0_INTERFACE_H
 #define TMR0_INTERFACE_H
