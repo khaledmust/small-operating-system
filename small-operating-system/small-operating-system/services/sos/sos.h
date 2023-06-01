@@ -52,7 +52,7 @@ en_SOS_SYSTEM_STATUS_t SOS_deinit(void);
  * @param pid Task's uniqie ID.
  * @param priority_level Task's priority level.
  */
-void SOS_crateTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level, void (*fptr_task) (void));
+en_SOS_SYSTEM_STATUS_t SOS_crateTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level, void (*fptr_task) (void));
 
 /**
  * @brief Removes a task from the database.
@@ -60,7 +60,7 @@ void SOS_crateTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8
  * @param ptr_st_SOS_DB Address of the tasks database.
  * @param pid Task's uniqie ID.
  */
-void SOS_deleteTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid);
+en_SOS_SYSTEM_STATUS_t SOS_deleteTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid);
 
 /**
  * @brief Modifies the priority level of a task.
@@ -69,7 +69,7 @@ void SOS_deleteTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint
  * @param pid Task's uniqie ID.
  * @param priority_level Task's priority level.
  */
-void SOS_modifyTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level);
+en_SOS_SYSTEM_STATUS_t SOS_modifyTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level);
 
 /**
  * @brief Runs the small OS.

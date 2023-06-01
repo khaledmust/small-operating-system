@@ -55,29 +55,38 @@ en_SOS_SYSTEM_STATUS_t SOS_deinit(void) {
  * @brief Adds a new task to the database.
  *
  * @param ptr_st_SOS_DB Address of the tasks database.
- * @param pid Task's uniqie ID.
+ * @param pid Task's unique ID.
  * @param priority_level Task's priority level.
  */
-void SOS_crateTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level, void (*fptr_task) (void)) {
+en_SOS_SYSTEM_STATUS_t SOS_crateTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level, void (*fptr_task) (void)) {
+    /* Check if the DB created and not full. */
     if (ptr_st_SOS_DB != NULL && (*ptr_st_SOS_DB)[NUM_OF_TASKS - 1] == NULL) {
         (*ptr_st_SOS_DB)[g_current_tasks_in_queue]->process_id = pid;
         (*ptr_st_SOS_DB)[g_current_tasks_in_queue]->process_priority_level = priority_level;
         (*ptr_st_SOS_DB)[g_current_tasks_in_queue]->fptr_task = fptr_task;
 
         g_current_tasks_in_queue++;
+    } else {
+        return SOS_STATUS_INVALID_STATE;
     }
+    return SOS_STATUS_SUCCESS;
 }
 
 /**
  * @brief Removes a task from the database.
  *
  * @param ptr_st_SOS_DB Address of the tasks database.
- * @param pid Task's uniqie ID.
+ * @param pid Task's unique ID.
  */
-void SOS_deleteTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid) {
-    if (*ptr_st_SOS_DB != NULL) {
+en_SOS_SYSTEM_STATUS_t SOS_deleteTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid) {
+    /* Check if the DB is created. */
+    if (ptr_st_SOS_DB != NULL) {
+        /* Nullify the task with the unique PID. */
         (*ptr_st_SOS_DB)[pid] = NULL;
+    } else {
+        return SOS_STATUS_INVALID_STATE;
     }
+    return SOS_STATUS_SUCCESS;
 }
 
 /**
@@ -87,9 +96,14 @@ void SOS_deleteTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint
  * @param pid Task's unique ID.
  * @param priority_level Task's priority level.
  */
-void SOS_modifyTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level) {
+en_SOS_SYSTEM_STATUS_t SOS_modifyTask(st_SOS_task_property_t* (*ptr_st_SOS_DB)[NUM_OF_TASKS], uint8 pid, uint8 priority_level) {
     // TODO Disable global interrupt.
-    if (*ptr_st_SOS_DB != NULL) {
+
+    /* Check if the DB is created. */
+    if (ptr_st_SOS_DB != NULL) {
         (*ptr_st_SOS_DB)[pid]->process_priority_level = priority_level;
+    } else {
+        return SOS_STATUS_INVALID_STATE;
     }
+    return SOS_STATUS_SUCCESS;
 }
